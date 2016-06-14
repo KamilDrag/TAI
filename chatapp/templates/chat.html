@@ -28,39 +28,40 @@
             <h3 class="text-center" >Balut Czarnik Drąg Django Czat </h3>
             <br /><br />
             <div class="col-md-8">
-                <div id="chat-body" class="panel panel-info">
+                <div id="chat-body" class="panel panel-primary">
                     <div class="panel-heading">OSTATNIE WIADOMOŚCI</div>
-                    <div id="msg-list-div" class="panel-body">
+                    <div id="msg-list-div" class="panel-body" >
                         <ul id="msg-list" class="media-list">
-                            {% for message in message_list %} <!--Tutaj rozbić wiadomość na nazwę użytkownika, datę i treść- może krotka, umieścić w odpowiednich polach-->
+                            {% for message in message_list %}
                                     <li class="media">
                                         <div class="media-body">
                                             <div class="media">
-                                                <a class="pull-left" href="#">
-                                                    <img class="media-object img-circle " src="assets/img/user.png" /> <!--Avatary użytkowników-->
+                                                <a class="pull-left">
+                                                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
                                                 </a>
                                                 <div class="media-body" >
                                                     {{ message.print_message }}
                                                     <br />
-                                                   <small class="text-muted">Alex Deo | 23rd June at 5:00pm</small>
+                                                   <div class="text-muted">{{ message.print_info }}</div>
                                                     <hr />
                                                 </div>
                                             </div>
                                         </div>
                                     </li>
                             {% endfor %}
-                    <script>
+
+
+                        </ul>
+                        <script>
                         var chatlist = document.getElementById('msg-list-div');
                         chatlist.scrollTop = chatlist.scrollHeight;
                     </script>
-
-                        </ul>
                     </div>
             <div class="panel-footer">
                 <form id="chat-form" method="post" action="/post/">
                     {% csrf_token %}
                     <div id="chat-bottom" class="input-group">
-                        <input type="text" id="chat-msg" name="chat-msg" class="form-control" placeholder="Enter Message" />
+                        <input type="text" id="chat-msg" name="chat-msg" class="form-control" placeholder="Wpisz wiadomość" />
                             <span class="input-group-btn">
                                 <input class="btn btn-default" id="send" type="submit" value="Wyślij"/>
                             </span>
@@ -78,19 +79,21 @@
             <div class="panel-heading">UŻYTKOWNICY ONLINE</div>
                 <div class="panel-body">
                     <ul class="media-list">
+                            {% for user in user_list %}
                         <li class="media">
                             <div class="media-body">
                                 <div class="media">
                                     <a class="pull-left" href="#">
-                                        <img class="media-object img-circle" style="max-height:40px;" src="assets/img/user.png" />
+                                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                                     </a>
                                     <div class="media-body" >
-                                        <h5>Alex Deo | User </h5>
-                                        <small class="text-muted">Active From 3 hours</small>
+                                        <h5> {{ user }} </h5>
+                                        <small class="text-muted"> {{ user.email }} </small>
                                     </div>
                                 </div>
                             </div>
                         </li>
+                            {% endfor %}
                     </ul>
                 </div>
             </div>
@@ -100,3 +103,8 @@
 </body>
 <script src="{% static 'chat.js' %}"></script>
 </html>
+<!--<div id="test">
+    {% for user in user_list %}
+    <li> {{ user }} </li>
+    {% endfor %}
+</div>-->
