@@ -64,10 +64,12 @@ def get_all_logged_in_users():
 
 def sign_up(request):
     title = 'Zarejestruj się.'
+    next = request.GET.get('next', '/sent_mail')
     form = SignUpForm(request.POST or None)
     context = {
         "title": title,
         "form":  form,
+        "next": next,
     }
     if form.is_valid():
         instance = form.save(commit=False)
@@ -85,12 +87,14 @@ def sign_up(request):
         sign_up_object.key = key
         sign_up_object.save()
 
-        Activation.send_mail("poczta.interia.pl", 587, "chat.tai@interia.pl", "chat.tai", "**********", email, key)
+        Activation.send_mail("poczta.interia.pl", 587, "chat.tai@interia.pl", "chat.tai", "56789098765tai", email, key)
 
         context = {
             "title": "Dzięki."
         }
-    return render(request, "sign_up.html", context)
+        return HttpResponseRedirect(next)
+    else:
+        return render(request, "sign_up.html", context)
 
 
 def activate(request):
@@ -100,6 +104,8 @@ def activate(request):
         user = User.objects.get_by_natural_key(sign_up_object.username)
         if not user.is_active:
             user.is_active = True
+            sign_up_object.solved = True
+            sign_up_object.save()
             user.save()
         return render(request, "activated.html", context=None)
     except ObjectDoesNotExist:
@@ -107,11 +113,17 @@ def activate(request):
 
 
 def contact(request):
-    context = None
-    return render(request, "contact.html", context)
+    return render(request, "contact.html", context=None)
 
 
 def logout(request):
     auth.logout(request)
     return render(request, "logout.html", context=None)
 
+
+def sent_mail(request):
+    return render(request, "sent_mail.html", context=None)
+
+
+def custom_404(request):
+    return render(request, "404.html", context=None)

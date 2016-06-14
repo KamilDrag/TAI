@@ -12,7 +12,10 @@ class Message(models.Model):
         return str(self.message_date) + " " + str(self.nick)
 
     def print_message(self):
-        return "[" + str(self.message_date).split(sep='.')[0] + "] " + str(self.nick) + ": " + self.message_content
+        return self.message_content
+
+    def print_info(self):
+        return str(self.message_date).split(sep='.')[0] + " | " + str(self.nick)
 
     @staticmethod
     def create_message(request):
