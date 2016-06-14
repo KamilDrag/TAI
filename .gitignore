@@ -1,9 +1,11 @@
 .idea/
 myenv/
 myvenv/
+/db.sqlite3
+/chatapp/migrations
 
 # Byte-compiled / optimized / DLL files
-__pycache__/
+**/__pycache__/
 *.py[cod]
 
 # C extensions
