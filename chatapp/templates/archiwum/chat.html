@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <title>Chat Panel</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'chat.css' %}">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <div id="chat-body" class="panel panel-default">
+        <div class="panel-heading">Chat Box</div>
+        <div id="msg-list-div" class="panel-body">
+            <ul id="msg-list" class="list-group">
+                {% for message in message_list %}
+                    <li> {{ message.print_message }} </li>
+                {% endfor %}
+                <script>
+                    var chatlist = document.getElementById('msg-list-div');
+                    chatlist.scrollTop = chatlist.scrollHeight;
+                </script>
+            </ul>
+        </div>
+    </div>
+
+    <form id="chat-form" method="post" action="/post/">
+        {% csrf_token %}
+        <div id="chat-bottom" class="input-group">
+            <input type="text" id="chat-msg" name="chat-msg" class="form-control"/>
+            <span class="input-group-btn">
+                <input class="btn btn-default" id="send" type="submit" value="Send"/>
+            </span>
+        </div>
+    </form>
+</body>
+<div>Użytkownicy online</div>
+<div id="test">
+    {% for user in user_list %}
+    <li> {{ user }} </li>
+    {% endfor %}
+</div>
+<script src="{% static 'chat.js' %}"></script>
+</html>

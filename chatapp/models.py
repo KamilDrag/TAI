@@ -27,3 +27,16 @@ class Message(models.Model):
     def get_all():
         return Message.objects.order_by('message_date')
 
+
+# Create your models here.
+class SignUp(models.Model):
+    email = models.EmailField()
+    username = models.CharField(max_length=120, blank=True, null=True)
+    password = models.CharField(max_length=120, blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    key = models.CharField(max_length=120)
+    solved = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.email
