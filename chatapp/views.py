@@ -13,6 +13,7 @@ def chat(request):
     if request.user.is_authenticated():
         message_list = Message.get_all()
         user_list = get_all_logged_in_users()
+        users = User.objects.all()
         return render_to_response("chat.html", locals(), context_instance=RequestContext(request))
     else:
         return login(request)
@@ -27,20 +28,27 @@ def post(request):
 
 
 def login(request):
-    next = request.GET.get('next', '/chat/')
-    form = LoginForm(request.POST or None)
+    if request.user.is_authenticated and request.user.username:
+        username = request.user.username
+        context = {
+            "username": username
+        }
+        return render(request, "already_logged_in.html", context=context)
+    else:
+        next = request.GET.get('next', '/chat/')
+        form = LoginForm(request.POST or None)
 
-    if request.method == "POST" and form.is_valid():
-        username = request.POST['username']
-        password = request.POST['password']
-        user = auth.authenticate(username=username, password=password)
+        if request.method == "POST" and form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
+            user = auth.authenticate(username=username, password=password)
 
-        if user and user.is_active:
-            auth.login(request, user)
-            return HttpResponseRedirect(next)
-        else:
-            return HttpResponse("Account is not active at the moment.")
-    return render(request, "login.html", {'next': next, 'form': form})
+            if user and user.is_active:
+                auth.login(request, user)
+                return HttpResponseRedirect(next)
+            else:
+                return HttpResponse("Account is not active at the moment.")
+        return render(request, "login.html", {'next': next, 'form': form})
 
 
 def messages(request):
@@ -63,38 +71,42 @@ def get_all_logged_in_users():
 
 
 def sign_up(request):
-    title = 'Zarejestruj się.'
-    next = request.GET.get('next', '/sent_mail')
-    form = SignUpForm(request.POST or None)
-    context = {
-        "title": title,
-        "form":  form,
-        "next": next,
-    }
-    if form.is_valid():
-        instance = form.save(commit=False)
-        username = form.cleaned_data.get("username")
-        password = form.clean_password()
-        email = form.clean_email()
-        instance.save()
-
-        user = User.objects.create_user(username=username, password=password, email=email)
-        user.is_active = False
-        user.save()
-        key = Activation.key_gen()
-
-        sign_up_object = SignUp.objects.get(username=username)
-        sign_up_object.key = key
-        sign_up_object.save()
-
-        Activation.send_mail("poczta.interia.pl", 587, "chat.tai@interia.pl", "chat.tai", "56789098765tai", email, key)
-
+    if request.user.is_authenticated and request.user.username:
+        username = request.user.username
         context = {
-            "title": "Dzięki."
+            "username": username
         }
-        return HttpResponseRedirect(next)
+        return render(request, "already_registered.html", context=context)
     else:
-        return render(request, "sign_up.html", context)
+        title = 'Zarejestruj się.'
+        next = request.GET.get('next', '/sent_mail')
+        form = SignUpForm(request.POST or None)
+        context = {
+            "title": title,
+            "form":  form,
+            "next": next,
+        }
+        if form.is_valid():
+            instance = form.save(commit=False)
+            username = form.cleaned_data.get("username")
+            password = form.clean_password()
+            email = form.clean_email()
+            instance.save()
+
+            user = User.objects.create_user(username=username, password=password, email=email)
+            user.is_active = False
+            user.save()
+            key = Activation.key_gen()
+
+            sign_up_object = SignUp.objects.get(username=username)
+            sign_up_object.key = key
+            sign_up_object.save()
+
+            Activation.send_mail("poczta.interia.pl", 587, "chat.tai@interia.pl", "chat.tai", "56789098765tai", email, key)
+
+            return HttpResponseRedirect(next)
+        else:
+            return render(request, "sign_up.html", context)
 
 
 def activate(request):
