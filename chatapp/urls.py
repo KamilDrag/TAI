@@ -11,7 +11,10 @@ urlpatterns = [
     url(r'^activate/', views.activate, name='activate'),
     url(r'^contact/', views.contact, name='contact'),
     url(r'^logout/', views.logout, name='logout'),
+    url(r'^sent_mail/', views.sent_mail, name='sent_mail'),
     url(r'^$', views.chat, name='chat'),
     # url(r'^$', views.message, name='message'),
 
 ]
+
+handler404 = 'views.custom_404'
