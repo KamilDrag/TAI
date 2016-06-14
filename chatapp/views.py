@@ -111,3 +111,7 @@ def contact(request):
     return render(request, "contact.html", context)
 
 
+def logout(request):
+    auth.logout(request)
+    return render(request, "logout.html", context=None)
+
