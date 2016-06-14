@@ -36,10 +36,10 @@
 
 <body>
 
-<div class="bt-homepg" align="left" margin="200px" style="padding: 0px 20px;">
-    <a href="login.htm" class="btn btn-primary btn-lg" style="padding: 5px 10px;">Strona główna</a>
-    <a href="contact.html" class="btn btn-default btn-lg" style="padding: 6px 10px;"><span
+<div class="bt-homepg" align="right" margin="200px" style="padding: 0px 20px;">
+    <a href="/contact" class="btn btn-default btn-lg" style="padding: 6px 10px;"><span
             class="glyphicon glyphicon-envelope"></span> Kontakt </a>
+    <a href="/" class="btn btn-primary btn-lg" style="padding: 5px 10px;">Strona główna</a>
 </div>
 
 <div class="container">
@@ -48,11 +48,6 @@
         {% csrf_token %}
         <h2 class="form-signin-heading">Rejestracja</h2>
         {{ form.as_p }}
-        <div class="checkbox">
-            <label>
-                <input value="remember-me" type="checkbox"> Pamiętaj mnie
-            </label>
-        </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Rejestracja</button>
     </form>
 
