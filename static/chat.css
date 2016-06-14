@@ -3,9 +3,9 @@
     position: fixed;
     bottom: 10px;
 }
+*/
 
 .panel-body {
-    overflow-y: scroll;
-    height: 85%;
+    overflow-y: auto;
+    height: 500;
 }
-*/
