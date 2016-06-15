@@ -9,3 +9,7 @@
     overflow-y: auto;
     height: 500;
 }
+#msg-list-div {
+    height: 400px;
+    overflow-y: auto;
+}

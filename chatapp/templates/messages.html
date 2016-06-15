@@ -1,3 +1,17 @@
 {% for message in message_list %}
-    <li> {{ message.print_message }} </li>
+<li class="media">
+    <div class="media-body">
+        <div class="media">
+            <a class="pull-left">
+                <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+            </a>
+            <div class="media-body">
+                {{ message.print_message }}
+                <br/>
+                <div class="text-muted">{{ message.print_info }}</div>
+                <hr/>
+            </div>
+        </div>
+    </div>
+</li>
 {% endfor %}
