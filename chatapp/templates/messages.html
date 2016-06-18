@@ -6,7 +6,22 @@
                 <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
             </a>
             <div class="media-body">
-                {{ message.print_message }}
+                {% if message.nick = request.user %}
+                    {% if message.is_stuff %}
+                         <font color="FF0000"><b>{{ message.print_message }}</b></font>
+                    {% else %}
+                        <font color="337AB7"><b>{{ message.print_message }}</b></font>
+                    {% endif %}
+                {% else %}
+                    {% if message.is_staff %}
+                         <font color="FF0000">{{ message.print_message }}</font>
+                    {% else %}
+                        {{ message.print_message }}
+                    {% endif %}
+                {% endif %}
+                 {% if request.user.is_staff %}
+                <a href="/del_message/?id={{ message.id }}">Usuń</a>
+                {% endif %}
                 <br/>
                 <div class="text-muted">{{ message.print_info }}</div>
                 <hr/>
@@ -15,3 +30,5 @@
     </div>
 </li>
 {% endfor %}
+
+<b>{{ message.print_message }}</b>

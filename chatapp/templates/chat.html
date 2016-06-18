@@ -32,26 +32,9 @@
                 <div class="panel-heading">OSTATNIE WIADOMOŚCI</div>
                 <div id="msg-list-div" class="panel-body">
                     <ul id="msg-list" class="media-list">
-                        {% for message in message_list %}
-                        <li class="media">
-                            <div class="media-body">
-                                <div class="media">
-                                    <a class="pull-left">
-                                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                                    </a>
-                                    <div class="media-body">
-                                        {{ message.print_message }}
-                                        <br/>
-                                        <div class="text-muted">{{ message.print_info }}</div>
-                                        <hr/>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        {% endfor %}
-
-
+                    Ładowanie wiadomości...
                     </ul>
+
                     <script>
                         var chatlist = document.getElementById('msg-list-div');
                         chatlist.scrollTop = chatlist.scrollHeight;

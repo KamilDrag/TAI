@@ -7,6 +7,7 @@ class Message(models.Model):
     nick = models.ForeignKey(User)
     message_date = models.DateTimeField(auto_now=True)
     message_content = models.CharField(max_length=80)
+    models.ImageField()
 
     def __str__(self):
         return str(self.message_date) + " " + str(self.nick)
@@ -29,6 +30,9 @@ class Message(models.Model):
     @staticmethod
     def get_all():
         return Message.objects.order_by('message_date')
+
+    def is_staff(self):
+        return User.objects.get_by_natural_key(self.nick)
 
 
 # Create your models here.

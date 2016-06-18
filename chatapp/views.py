@@ -139,3 +139,11 @@ def sent_mail(request):
 
 def custom_404(request):
     return render(request, "404.html", context=None)
+
+
+def del_message(request):
+    mid = (request.GET.get('id'))
+    if request.user.is_staff:
+        message = Message.objects.get(pk=mid)
+        message.delete()
+    return chat(request)
