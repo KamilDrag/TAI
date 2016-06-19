@@ -23,6 +23,36 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 <body style="font-family:Verdana">
+
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+
+
+
+
+
+        <div class="navbar-header pull-right">
+            <p class="navbar-text">
+                <a href="/logout" class="navbar-link">Wyloguj</a>
+            </p>
+        </div>
+
+        <div class="navbar-header pull-right">
+            <p class="navbar-text">
+                <a href="/contact" class="navbar-link">Kontakt</a>
+            </p>
+        </div>
+
+        <div class="navbar-header pull-right">
+            <p class="navbar-text">
+                <a href="/account" class="navbar-link">{{request.user.username}}</a>
+            </p>
+        </div>
+
+    </div>
+</div>
+
+
 <div class="container">
     <div class="row " style="padding-top:40px;">
         <h3 class="text-center">Balut Czarnik Drąg Django Czat </h3>
@@ -32,12 +62,13 @@
                 <div class="panel-heading">OSTATNIE WIADOMOŚCI</div>
                 <div id="msg-list-div" class="panel-body">
                     <ul id="msg-list" class="media-list">
-                    Ładowanie wiadomości...
+                        Ładowanie wiadomości...
                     </ul>
 
                     <script>
                         var chatlist = document.getElementById('msg-list-div');
                         chatlist.scrollTop = chatlist.scrollHeight;
+
 
                     </script>
                 </div>

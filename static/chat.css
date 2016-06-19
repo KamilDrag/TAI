@@ -13,3 +13,7 @@
     height: 400px;
     overflow-y: auto;
 }
+.navbar-collapse.in,
+.navbar-collapse.collapsing {
+    clear: left;
+}
