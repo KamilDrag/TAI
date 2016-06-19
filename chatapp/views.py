@@ -147,3 +147,27 @@ def del_message(request):
         message = Message.objects.get(pk=mid)
         message.delete()
     return chat(request)
+
+
+def account(request):
+    if request.user.is_authenticated and request.user.username:
+        form = AccountForm(request.POST or None)
+        next = request.GET.get('next', '/account_changed')
+        context = {
+            "form": form,
+        }
+        if request.method == "POST":
+            if form.is_valid():
+                user = User.objects.get_by_natural_key(request.user.username)
+                user.set_password(form.cleaned_data.get("new_password"))
+                user.save()
+                return HttpResponseRedirect(next)
+            return render(request, "account.html", context=context)
+        else:
+            return render(request, "account.html", context=context)
+    else:
+        return login(request)
+
+
+def account_changed(request):
+    return render(request, "account_changed.html", context=None)

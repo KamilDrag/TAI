@@ -13,6 +13,8 @@ urlpatterns = [
     url(r'^contact/', views.contact, name='contact'),
     url(r'^logout/', views.logout, name='logout'),
     url(r'^sent_mail/', views.sent_mail, name='sent_mail'),
+    url(r'^account/$', views.account, name='account'),
+    url(r'^account_changed/$', views.account_changed, name='account_changed'),
     url(r'^$', views.chat, name='chat'),
     # url(r'^$', views.message, name='message'),
 
